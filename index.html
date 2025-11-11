@@ -15,56 +15,109 @@
       --accent-2: #22d3ee;
     }
     * { box-sizing: border-box }
+    html, body { height: 100%; }
     body {
       margin: 0;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu;
-      background: var(--bg);
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell;
+      background: radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,.08), transparent),
+                  radial-gradient(1000px 500px at 110% 10%, rgba(139,92,246,.08), transparent),
+                  var(--bg);
       color: var(--text);
       line-height: 1.6;
     }
-    header { position: sticky; top: 0; background: rgba(11,15,21,.8); padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; }
-    .brand { font-weight: bold; font-size: 20px; }
-    nav a { color: var(--muted); margin: 0 10px; text-decoration: none; }
+    header {
+      position: sticky; top: 0; backdrop-filter: blur(8px);
+      background: rgba(11,15,21,.7); border-bottom: 1px solid rgba(255,255,255,.06);
+      padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .brand { font-weight: 700; font-size: 18px; display: flex; align-items: center; gap: 8px; }
+    .logo { width: 24px; height: 24px; border-radius: 6px; background: conic-gradient(from 220deg, var(--accent), var(--accent-2)); }
+    nav a { color: var(--muted); text-decoration: none; margin: 0 10px; font-weight: 600; }
     nav a:hover { color: var(--text); }
-    main { padding: 20px; max-width: 900px; margin: auto; }
-    .card { background: var(--card); border-radius: 10px; padding: 20px; margin: 20px 0; }
-    .hero h1 { font-size: 32px; }
-    footer { text-align: center; color: var(--muted); padding: 20px; border-top: 1px solid rgba(255,255,255,.1); }
+    select, button { background: var(--card); color: var(--text); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
+    button.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: none; }
+    main { padding: 20px; max-width: 1000px; margin: auto; }
+    .card { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); border: 1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 20px; margin-top: 20px; }
+    .hero h1 { font-size: 32px; margin-bottom: 10px; }
+    .lead { color: var(--muted); font-size: 16px; }
+    .footer { margin-top: 40px; padding: 20px 0; color: var(--muted); border-top: 1px solid rgba(255,255,255,.1); text-align: center; }
   </style>
 </head>
 <body>
   <header>
-    <div class="brand">🤖 Robot — Beka‑Coconut</div>
+    <div class="brand"><div class="logo"></div> Robot — Beka‑Coconut</div>
     <nav>
-      <a href="#services">Услуги</a>
-      <a href="#about">О нас</a>
-      <a href="#contact">Контакты</a>
+      <a href="#services" data-i18n="nav.services">Услуги</a>
+      <a href="#about" data-i18n="nav.about">О нас</a>
+      <a href="#contact" data-i18n="nav.contact">Контакты</a>
     </nav>
+    <div>
+      <select id="lang"><option value="ru">RU</option><option value="uk">UK</option><option value="en">EN</option></select>
+      <button id="cta" class="primary" data-i18n="cta">Связаться</button>
+    </div>
   </header>
+
   <main>
     <section class="hero card">
-      <h1>Строим умные системы, которые видят и двигаются</h1>
-      <p>Распознавание объектов, поз и жестов, интеграция YOLOv8 и MediaPipe, оптимизация под NVIDIA RTX, real‑time поток.</p>
+      <h1 data-i18n="hero.title">Строим умные системы, которые видят и двигаются</h1>
+      <p class="lead" data-i18n="hero.lead">Прототипы и решения на базе YOLOv8, MediaPipe и собственных моделей. Оптимизация под NVIDIA RTX, real‑time поток.</p>
+      <canvas id="viz" width="640" height="300" style="width:100%;border-radius:10px;background:#0b1220;margin-top:15px;"></canvas>
     </section>
+
     <section id="services" class="card">
-      <h2>Услуги</h2>
+      <h2 data-i18n="services.title">Услуги</h2>
       <ul>
-        <li>Компьютерное зрение</li>
-        <li>Робототехника</li>
-        <li>Индивидуальные модели ИИ</li>
+        <li data-i18n="services.vision">Компьютерное зрение</li>
+        <li data-i18n="services.robotics">Робототехника</li>
+        <li data-i18n="services.ai">Индивидуальные модели</li>
       </ul>
     </section>
+
     <section id="about" class="card">
-      <h2>О нас</h2>
-      <p>Мы создаем прототипы, оптимизируем производительность и внедряем готовые решения. Фокус — стабильный FPS, простота запуска и понятная документация.</p>
+      <h2 data-i18n="about.title">О нас</h2>
+      <p data-i18n="about.text">Мы экспериментируем быстро и прагматично: от идеи до работающего прототипа. Фокус — стабильный FPS и простота запуска.</p>
     </section>
+
     <section id="contact" class="card">
-      <h2>Контакты</h2>
-      <p>✉️ yswvr@umsystem.edu<br>📞 +1 (573) 202‑0366<br>🌍 USA / Remote</p>
+      <h2 data-i18n="contact.title">Контакты</h2>
+      <p>✉️ <a href="mailto:yswvr@umsystem.edu" style="color:var(--text)">yswvr@umsystem.edu</a><br>📞 +1 (573) 202‑0366<br>🌍 USA / Remote</p>
     </section>
+
+    <div class="footer">© <span id="year"></span> Robot — Beka‑Coconut</div>
   </main>
-  <footer>
-    © <script>document.write(new Date().getFullYear());</script> Robot — Beka‑Coconut
-  </footer>
+
+  <script>
+    const dict = {
+      ru: {'cta':'Связаться','nav.services':'Услуги','nav.about':'О нас','nav.contact':'Контакты',
+           'hero.title':'Строим умные системы, которые видят и двигаются','hero.lead':'Прототипы и решения на базе YOLOv8, MediaPipe и собственных моделей. Оптимизация под NVIDIA RTX, real‑time поток.',
+           'services.title':'Услуги','services.vision':'Компьютерное зрение','services.robotics':'Робототехника','services.ai':'Индивидуальные модели',
+           'about.title':'О нас','about.text':'Мы экспериментируем быстро и прагматично: от идеи до работающего прототипа. Фокус — стабильный FPS и простота запуска.','contact.title':'Контакты'},
+      uk: {'cta':'Зв’язатися','nav.services':'Послуги','nav.about':'Про нас','nav.contact':'Контакти',
+           'hero.title':'Будуємо розумні системи, що бачать і рухаються','hero.lead':'Прототипи та рішення на базі YOLOv8, MediaPipe і власних моделей. Оптимізація під NVIDIA RTX, real‑time потік.',
+           'services.title':'Послуги','services.vision':'Комп’ютерний зір','services.robotics':'Робототехніка','services.ai':'Індивідуальні моделі',
+           'about.title':'Про нас','about.text':'Ми експериментуємо швидко та прагматично: від ідеї до працюючого прототипу. Фокус — стабільний FPS і простота запуску.','contact.title':'Контакти'},
+      en: {'cta':'Contact','nav.services':'Services','nav.about':'About','nav.contact':'Contact',
+           'hero.title':'We build smart systems that see and move','hero.lead':'Prototypes and solutions based on YOLOv8, MediaPipe, and custom models. Optimized for NVIDIA RTX, real‑time pipeline.',
+           'services.title':'Services','services.vision':'Computer Vision','services.robotics':'Robotics','services.ai':'Custom AI Models',
+           'about.title':'About','about.text':'We iterate fast and pragmatically: from idea to working prototype. Focus — stable FPS and simple setup.','contact.title':'Contact'}
+    };
+    const $$ = s=>Array.from(document.querySelectorAll(s));
+    const setLang = lang=>{
+      const d=dict[lang]||dict.ru;
+      $$('[data-i18n]').forEach(e=>{const k=e.dataset.i18n;if(d[k])e.textContent=d[k];});
+      localStorage.setItem('lang',lang);
+    };
+    const saved=localStorage.getItem('lang')||'ru';setLang(saved);
+    document.getElementById('lang').value=saved;
+    document.getElementById('lang').addEventListener('change',e=>setLang(e.target.value));
+    document.getElementById('cta').addEventListener('click',()=>window.location='mailto:yswvr@umsystem.edu');
+    document.getElementById('year').textContent=new Date().getFullYear();
+    const c=document.getElementById('viz'),x=c.getContext('2d');let t=0;
+    (function loop(){x.clearRect(0,0,c.width,c.height);for(let i=0;i<60;i++){const w=c.width,h=c.height;
+    const X=w/2+Math.sin(t/50+i/6)*w/3,Y=h/2+Math.cos(t/60+i/5)*h/3;
+    const r=120+Math.sin(t/10+i)*60,g=200+Math.cos(t/13+i)*40;
+    const g2=x.createRadialGradient(X,Y,0,X,Y,140);g2.addColorStop(0,`rgba(${r|0},${g|0},255,0.08)`);g2.addColorStop(1,'transparent');
+    x.fillStyle=g2;x.beginPath();x.arc(X,Y,140,0,Math.PI*2);x.fill();}t++;requestAnimationFrame(loop);})(); 
+  </script>
 </body>
 </html>
