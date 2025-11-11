@@ -15,32 +15,35 @@
       --accent-2: #22d3ee;
     }
     * { box-sizing: border-box }
-    html, body { height: 100%; }
+    html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell; }
     body {
-      margin: 0;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell;
       background: radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,.08), transparent),
                   radial-gradient(1000px 500px at 110% 10%, rgba(139,92,246,.08), transparent),
                   var(--bg);
       color: var(--text);
       line-height: 1.6;
+      overflow-x: hidden;
     }
     header {
       position: sticky; top: 0; backdrop-filter: blur(8px);
       background: rgba(11,15,21,.7); border-bottom: 1px solid rgba(255,255,255,.06);
-      padding: 10px 20px; display: flex; justify-content: space-between; align-items: center;
+      padding: 10px 20px; display: flex; justify-content: space-between; align-items: center; z-index: 10;
     }
     .brand { font-weight: 700; font-size: 18px; display: flex; align-items: center; gap: 8px; }
     .logo { width: 24px; height: 24px; border-radius: 6px; background: conic-gradient(from 220deg, var(--accent), var(--accent-2)); }
     nav a { color: var(--muted); text-decoration: none; margin: 0 10px; font-weight: 600; }
     nav a:hover { color: var(--text); }
-    select, button { background: var(--card); color: var(--text); border: 1px solid rgba(255,255,255,.1); border-radius: 8px; padding: 6px 10px; cursor: pointer; }
-    button.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: none; }
+    .flags img { width: 24px; height: 24px; cursor: pointer; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); margin-left: 6px; }
+    button.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: none; color: white; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
     main { padding: 20px; max-width: 1000px; margin: auto; }
     .card { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); border: 1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 20px; margin-top: 20px; }
     .hero h1 { font-size: 32px; margin-bottom: 10px; }
     .lead { color: var(--muted); font-size: 16px; }
-    .footer { margin-top: 40px; padding: 20px 0; color: var(--muted); border-top: 1px solid rgba(255,255,255,.1); text-align: center; }
+    footer {
+      margin-top: 40px; padding: 20px 0; color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,.1); text-align: center; position: relative; overflow: hidden;
+    }
+    canvas#footerCanvas { position: absolute; bottom: 0; left: 0; width: 100%; height: 100px; pointer-events: none; }
   </style>
 </head>
 <body>
@@ -51,9 +54,13 @@
       <a href="#about" data-i18n="nav.about">О нас</a>
       <a href="#contact" data-i18n="nav.contact">Контакты</a>
     </nav>
-    <div>
-      <select id="lang"><option value="ru">RU</option><option value="uk">UK</option><option value="en">EN</option></select>
-      <button id="cta" class="primary" data-i18n="cta">Связаться</button>
+    <div style="display:flex;align-items:center;gap:8px;">
+      <div class="flags">
+        <img src="https://flagcdn.com/w20/ru.png" data-lang="ru" title="Русский">
+        <img src="https://flagcdn.com/w20/ua.png" data-lang="uk" title="Українська">
+        <img src="https://flagcdn.com/w20/gb.png" data-lang="en" title="English">
+      </div>
+      <button id="contact-btn" class="primary" data-i18n="cta">Обратная связь</button>
     </div>
   </header>
 
@@ -82,42 +89,27 @@
       <h2 data-i18n="contact.title">Контакты</h2>
       <p>✉️ <a href="mailto:yswvr@umsystem.edu" style="color:var(--text)">yswvr@umsystem.edu</a><br>📞 +1 (573) 202‑0366<br>🌍 USA / Remote</p>
     </section>
-
-    <div class="footer">© <span id="year"></span> Robot — Beka‑Coconut</div>
   </main>
+
+  <footer>
+    <canvas id="footerCanvas"></canvas>
+    <p>© <span id="year"></span> <a href="https://robot-website.vercel.app/" style="color:var(--accent-2);text-decoration:none;">Robot — Beka‑Coconut</a></p>
+  </footer>
 
   <script>
     const dict = {
-      ru: {'cta':'Связаться','nav.services':'Услуги','nav.about':'О нас','nav.contact':'Контакты',
-           'hero.title':'Строим умные системы, которые видят и двигаются','hero.lead':'Прототипы и решения на базе YOLOv8, MediaPipe и собственных моделей. Оптимизация под NVIDIA RTX, real‑time поток.',
-           'services.title':'Услуги','services.vision':'Компьютерное зрение','services.robotics':'Робототехника','services.ai':'Индивидуальные модели',
-           'about.title':'О нас','about.text':'Мы экспериментируем быстро и прагматично: от идеи до работающего прототипа. Фокус — стабильный FPS и простота запуска.','contact.title':'Контакты'},
-      uk: {'cta':'Зв’язатися','nav.services':'Послуги','nav.about':'Про нас','nav.contact':'Контакти',
-           'hero.title':'Будуємо розумні системи, що бачать і рухаються','hero.lead':'Прототипи та рішення на базі YOLOv8, MediaPipe і власних моделей. Оптимізація під NVIDIA RTX, real‑time потік.',
-           'services.title':'Послуги','services.vision':'Комп’ютерний зір','services.robotics':'Робототехніка','services.ai':'Індивідуальні моделі',
-           'about.title':'Про нас','about.text':'Ми експериментуємо швидко та прагматично: від ідеї до працюючого прототипу. Фокус — стабільний FPS і простота запуску.','contact.title':'Контакти'},
-      en: {'cta':'Contact','nav.services':'Services','nav.about':'About','nav.contact':'Contact',
-           'hero.title':'We build smart systems that see and move','hero.lead':'Prototypes and solutions based on YOLOv8, MediaPipe, and custom models. Optimized for NVIDIA RTX, real‑time pipeline.',
-           'services.title':'Services','services.vision':'Computer Vision','services.robotics':'Robotics','services.ai':'Custom AI Models',
-           'about.title':'About','about.text':'We iterate fast and pragmatically: from idea to working prototype. Focus — stable FPS and simple setup.','contact.title':'Contact'}
+      ru:{'cta':'Обратная связь','nav.services':'Услуги','nav.about':'О нас','nav.contact':'Контакты','hero.title':'Строим умные системы, которые видят и двигаются','hero.lead':'Прототипы и решения на базе YOLOv8, MediaPipe и собственных моделей. Оптимизация под NVIDIA RTX, real‑time поток.','services.title':'Услуги','services.vision':'Компьютерное зрение','services.robotics':'Робототехника','services.ai':'Индивидуальные модели','about.title':'О нас','about.text':'Мы экспериментируем быстро и прагматично: от идеи до работающего прототипа. Фокус — стабильный FPS и простота запуска.','contact.title':'Контакты'},
+      uk:{'cta':'Зв’язатися','nav.services':'Послуги','nav.about':'Про нас','nav.contact':'Контакти','hero.title':'Будуємо розумні системи, що бачать і рухаються','hero.lead':'Прототипи та рішення на базі YOLOv8, MediaPipe і власних моделей. Оптимізація під NVIDIA RTX, real‑time потік.','services.title':'Послуги','services.vision':'Комп’ютерний зір','services.robotics':'Робототехніка','services.ai':'Індивідуальні моделі','about.title':'Про нас','about.text':'Ми експериментуємо швидко та прагматично: від ідеї до працюючого прототипу. Фокус — стабільний FPS і простота запуску.','contact.title':'Контакти'},
+      en:{'cta':'Contact','nav.services':'Services','nav.about':'About','nav.contact':'Contact','hero.title':'We build smart systems that see and move','hero.lead':'Prototypes and solutions based on YOLOv8, MediaPipe, and custom models. Optimized for NVIDIA RTX, real‑time pipeline.','services.title':'Services','services.vision':'Computer Vision','services.robotics':'Robotics','services.ai':'Custom AI Models','about.title':'About','about.text':'We iterate fast and pragmatically: from idea to working prototype. Focus — stable FPS and simple setup.','contact.title':'Contact'}
     };
     const $$ = s=>Array.from(document.querySelectorAll(s));
-    const setLang = lang=>{
-      const d=dict[lang]||dict.ru;
-      $$('[data-i18n]').forEach(e=>{const k=e.dataset.i18n;if(d[k])e.textContent=d[k];});
-      localStorage.setItem('lang',lang);
-    };
+    const setLang = lang=>{const d=dict[lang]||dict.ru;$$('[data-i18n]').forEach(e=>{const k=e.dataset.i18n;if(d[k])e.textContent=d[k];});localStorage.setItem('lang',lang);};
     const saved=localStorage.getItem('lang')||'ru';setLang(saved);
-    document.getElementById('lang').value=saved;
-    document.getElementById('lang').addEventListener('change',e=>setLang(e.target.value));
-    document.getElementById('cta').addEventListener('click',()=>window.location='mailto:yswvr@umsystem.edu');
+    document.querySelectorAll('.flags img').forEach(img=>img.addEventListener('click',()=>{setLang(img.dataset.lang);}));
+    document.getElementById('contact-btn').addEventListener('click',()=>window.location='mailto:yswvr@umsystem.edu');
     document.getElementById('year').textContent=new Date().getFullYear();
-    const c=document.getElementById('viz'),x=c.getContext('2d');let t=0;
-    (function loop(){x.clearRect(0,0,c.width,c.height);for(let i=0;i<60;i++){const w=c.width,h=c.height;
-    const X=w/2+Math.sin(t/50+i/6)*w/3,Y=h/2+Math.cos(t/60+i/5)*h/3;
-    const r=120+Math.sin(t/10+i)*60,g=200+Math.cos(t/13+i)*40;
-    const g2=x.createRadialGradient(X,Y,0,X,Y,140);g2.addColorStop(0,`rgba(${r|0},${g|0},255,0.08)`);g2.addColorStop(1,'transparent');
-    x.fillStyle=g2;x.beginPath();x.arc(X,Y,140,0,Math.PI*2);x.fill();}t++;requestAnimationFrame(loop);})(); 
+    const c=document.getElementById('viz'),x=c.getContext('2d');let t=0;(function loop(){x.clearRect(0,0,c.width,c.height);for(let i=0;i<60;i++){const w=c.width,h=c.height;const X=w/2+Math.sin(t/50+i/6)*w/3,Y=h/2+Math.cos(t/60+i/5)*h/3;const r=120+Math.sin(t/10+i)*60,g=200+Math.cos(t/13+i)*40;const g2=x.createRadialGradient(X,Y,0,X,Y,140);g2.addColorStop(0,`rgba(${r|0},${g|0},255,0.08)`);g2.addColorStop(1,'transparent');x.fillStyle=g2;x.beginPath();x.arc(X,Y,140,0,Math.PI*2);x.fill();}t++;requestAnimationFrame(loop);})(); 
+    const f=document.getElementById('footerCanvas'),ctx=f.getContext('2d');function resizeFooter(){f.width=window.innerWidth;f.height=100;}resizeFooter();window.addEventListener('resize',resizeFooter);let a=0;function footerLoop(){ctx.clearRect(0,0,f.width,f.height);for(let i=0;i<50;i++){const x=i*30+a%30;const y=Math.sin((i+a/10)/2)*20+60;ctx.fillStyle=`rgba(${150+i*2},${100+i*3},255,0.15)`;ctx.beginPath();ctx.arc(x,y,20,0,Math.PI*2);ctx.fill();}a+=0.5;requestAnimationFrame(footerLoop);}footerLoop();
   </script>
 </body>
 </html>
