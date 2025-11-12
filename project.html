@@ -24,59 +24,109 @@
       line-height: 1.6;
       overflow-x: hidden;
     }
-    header { text-align: center; padding: 30px 10px; }
-    h1 { font-size: clamp(26px, 5vw, 36px); margin-bottom: 10px; }
+    header {
+      text-align: center;
+      padding: 20px 10px;
+      position: relative;
+    }
+    .back-btn {
+      position: absolute;
+      left: 20px; top: 20px;
+      background: none;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: var(--text);
+      border-radius: 8px;
+      padding: 6px 14px;
+      cursor: pointer;
+      transition: all .3s;
+    }
+    .back-btn:hover {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-color: transparent;
+      transform: translateX(-3px);
+    }
+    h1 {
+      font-size: clamp(26px, 5vw, 40px);
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 10px;
+      animation: fadeIn 1s ease;
+    }
     .lead { color: var(--muted); font-size: 16px; }
     .project-gallery {
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 20px;
-      padding: 20px;
+      gap: 25px;
+      padding: 30px 10px;
       max-width: 1100px;
       margin: auto;
     }
     .project-card {
       background: var(--card);
-      border: 1px solid rgba(255,255,255,.06);
-      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,.08);
+      border-radius: 14px;
       width: 320px;
-      padding: 15px;
+      padding: 18px;
       text-align: center;
-      transition: transform .3s ease, box-shadow .3s ease;
+      box-shadow: 0 0 10px rgba(255,255,255,0.05);
+      transition: transform .4s ease, box-shadow .4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: fadeUp .8s ease forwards;
     }
-    .project-card:hover { transform: translateY(-6px); box-shadow: 0 0 10px rgba(139,92,246,.4); }
+    .project-card:hover {
+      transform: translateY(-8px) scale(1.03);
+      box-shadow: 0 0 25px 8px rgba(139,92,246,0.25),
+                  0 0 40px 16px rgba(34,211,238,0.15);
+      transition: box-shadow .4s ease-in-out, transform .4s ease-in-out;
+    }
     .project-card img {
       width: 100%;
-      border-radius: 10px;
+      border-radius: 12px;
       object-fit: cover;
-      max-height: 200px;
+      max-height: 220px;
     }
-    footer { text-align: center; padding: 20px; color: var(--muted); border-top: 1px solid rgba(255,255,255,.1); margin-top: 40px; }
+    h3 { margin: 12px 0 6px; }
+    p { color: var(--muted); font-size: 14px; }
+    footer {
+      text-align: center; padding: 20px; color: var(--muted);
+      border-top: 1px solid rgba(255,255,255,.1); margin-top: 40px;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
     @media (max-width: 700px) {
       .project-card { width: 90%; }
-      .project-gallery { flex-direction: column; align-items: center; }
+      .back-btn { left: 10px; top: 10px; }
     }
   </style>
 </head>
 <body>
   <header>
+    <button class="back-btn" onclick="window.location.href='index.html'">← Назад</button>
     <h1>Project "Robot"</h1>
     <p class="lead">Система, объединяющая искусственный интеллект, компьютерное зрение и механику.</p>
   </header>
 
   <section class="project-gallery">
-    <div class="project-card">
+    <div class="project-card" style="animation-delay:0.1s">
       <img src="https://picsum.photos/400/250?random=1" alt="Модуль зрения">
       <h3>Vision Module</h3>
       <p>Отвечает за распознавание объектов и ориентацию в пространстве с использованием YOLOv8 и OpenPose.</p>
     </div>
-    <div class="project-card">
+    <div class="project-card" style="animation-delay:0.3s">
       <img src="https://picsum.photos/400/250?random=2" alt="Система управления">
       <h3>Control System</h3>
       <p>Синхронизирует движения и реакции робота на основе сенсоров и моделей предсказания траекторий.</p>
     </div>
-    <div class="project-card">
+    <div class="project-card" style="animation-delay:0.5s">
       <img src="https://picsum.photos/400/250?random=3" alt="AI Обучение">
       <h3>AI Learning</h3>
       <p>Самообучающаяся нейросеть, адаптирующая поведение под новые задачи и условия в реальном времени.</p>
