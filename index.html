@@ -33,7 +33,7 @@
     .brand { font-weight: 700; font-size: 18px; display: flex; align-items: center; gap: 8px; }
     .logo { width: 24px; height: 24px; border-radius: 6px; background: conic-gradient(from 220deg, var(--accent), var(--accent-2)); }
     nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
-    nav a { color: var(--muted); text-decoration: none; font-weight: 600; }
+    nav a { color: var(--muted); text-decoration: none; font-weight: 600; transition: color .3s; }
     nav a:hover { color: var(--text); }
     button.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: none; color: white; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
     main { padding: 20px; max-width: 1000px; margin: auto; }
@@ -51,7 +51,7 @@
     <nav>
       <a href="#services">Услуги</a>
       <a href="#about">О нас</a>
-      <a href="project.html" target="_blank">Проект</a>
+      <a href="project.html">Проект</a>
       <a href="#team">Команда</a>
       <a href="#contact">Контакты</a>
     </nav>
