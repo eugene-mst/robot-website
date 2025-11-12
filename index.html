@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Robot — Beka‑Coconut</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
-  <meta name="description" content="Robot — решения по компьютерному зрению и робототехнике. Beka‑Coconut." />
   <style>
     :root {
       --bg: #0b0f15;
@@ -36,7 +35,6 @@
     nav { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
     nav a { color: var(--muted); text-decoration: none; font-weight: 600; }
     nav a:hover { color: var(--text); }
-    .flags img { width: 24px; height: 24px; cursor: pointer; border-radius: 50%; border: 1px solid rgba(255,255,255,.2); margin-left: 6px; }
     button.primary { background: linear-gradient(135deg, var(--accent), var(--accent-2)); border: none; color: white; border-radius: 8px; padding: 6px 10px; cursor: pointer; }
     main { padding: 20px; max-width: 1000px; margin: auto; }
     .card { background: linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,0)); border: 1px solid rgba(255,255,255,.06); border-radius: 12px; padding: 20px; margin-top: 20px; }
@@ -47,10 +45,45 @@
       border-top: 1px solid rgba(255,255,255,.1); text-align: center; position: relative; overflow: hidden;
     }
     canvas#footerCanvas { position: absolute; bottom: 0; left: 0; width: 100%; height: 100px; pointer-events: none; }
+
+    /* Команда */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 24px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .member {
+      background: var(--card);
+      border-radius: 12px;
+      padding: 16px;
+      transition: transform .3s, box-shadow .3s;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .member.visible {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity .6s ease-out, transform .6s ease-out;
+    }
+    .member:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 0 10px rgba(139,92,246,.4);
+    }
+    .member img {
+      width: 100%;
+      border-radius: 12px;
+      border: 2px solid rgba(255,255,255,0.1);
+      object-fit: cover;
+      aspect-ratio: 1 / 1;
+    }
+    .member h3 { margin: 10px 0 5px; }
+    .member p { color: var(--muted); font-size: 14px; }
+
     @media (max-width: 600px) {
       header { flex-direction: column; gap: 10px; text-align: center; }
       nav { flex-direction: column; gap: 5px; }
-      .flags img { margin: 0 4px; }
     }
   </style>
 </head>
@@ -60,37 +93,25 @@
     <nav>
       <a href="#services">Услуги</a>
       <a href="#about">О нас</a>
+      <a href="#team">Команда</a>
       <a href="#contact">Контакты</a>
     </nav>
-    <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;">
-      <div class="flags">
-        <img src="https://flagcdn.com/w20/ru.png" data-lang="ru" title="Русский">
-        <img src="https://flagcdn.com/w20/ua.png" data-lang="uk" title="Українська">
-        <img src="https://flagcdn.com/w20/gb.png" data-lang="en" title="English">
-      </div>
-      <button id="contact-btn" class="primary">Обратная связь</button>
-    </div>
+    <button id="contact-btn" class="primary">Обратная связь</button>
   </header>
 
   <main>
     <section class="hero card">
       <h1>Строим умные системы, которые видят и двигаются</h1>
       <p class="lead">Прототипы и решения на базе YOLOv8, MediaPipe и собственных моделей. Оптимизация под NVIDIA RTX, real‑time поток.</p>
-      <canvas id="viz" width="640" height="300" style="width:100%;border-radius:10px;background:#0b1220;margin-top:15px;"></canvas>
     </section>
 
-    <section id="services" class="card">
-      <h2>Услуги</h2>
-      <ul>
-        <li>Компьютерное зрение</li>
-        <li>Робототехника</li>
-        <li>Индивидуальные модели</li>
-      </ul>
-    </section>
-
-    <section id="about" class="card">
-      <h2>О нас</h2>
-      <p>Мы экспериментируем быстро и прагматично: от идеи до работающего прототипа. Фокус — стабильный FPS и простота запуска.</p>
+    <section id="team" class="card">
+      <h2>Команда</h2>
+      <div class="team-grid">
+        <div class="member"><img src="https://picsum.photos/300?random=1" alt="Member 1"><h3>Бека</h3><p>AI Engineer / Vision Systems</p></div>
+        <div class="member"><img src="https://picsum.photos/300?random=2" alt="Member 2"><h3>Coconut</h3><p>Robotics Developer</p></div>
+        <div class="member"><img src="https://picsum.photos/300?random=3" alt="Member 3"><h3>Nova</h3><p>ML Researcher</p></div>
+      </div>
     </section>
 
     <section id="contact" class="card">
@@ -101,16 +122,30 @@
 
   <footer>
     <canvas id="footerCanvas"></canvas>
-    <p>© <span id="year"></span> <a href="https://robot-website.vercel.app/" style="color:var(--accent-2);text-decoration:none;">Robot — Beka‑Coconut</a></p>
+    <p>© <span id="year"></span> Robot — Beka‑Coconut</p>
   </footer>
 
   <script>
+    // Плавное появление членов команды
+    const members = document.querySelectorAll('.member');
+    const obs = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) entry.target.classList.add('visible');
+      });
+    }, { threshold: 0.3 });
+    members.forEach(m => obs.observe(m));
+
+    // Email-кнопка
     document.getElementById('contact-btn').addEventListener('click',()=>window.location='mailto:yswvr@umsystem.edu');
     document.getElementById('year').textContent=new Date().getFullYear();
-    const c=document.getElementById('viz'),x=c.getContext('2d');let t=0;(function loop(){x.clearRect(0,0,c.width,c.height);for(let i=0;i<60;i++){const w=c.width,h=c.height;const X=w/2+Math.sin(t/50+i/6)*w/3,Y=h/2+Math.cos(t/60+i/5)*h/3;const r=120+Math.sin(t/10+i)*60,g=200+Math.cos(t/13+i)*40;const g2=x.createRadialGradient(X,Y,0,X,Y,140);g2.addColorStop(0,`rgba(${r|0},${g|0},255,0.08)`);g2.addColorStop(1,'transparent');x.fillStyle=g2;x.beginPath();x.arc(X,Y,140,0,Math.PI*2);x.fill();}t++;requestAnimatio...
+
+    // Анимация футера
     const f=document.getElementById('footerCanvas'),ctx=f.getContext('2d');
     function resizeFooter(){f.width=window.innerWidth;f.height=100;}resizeFooter();window.addEventListener('resize',resizeFooter);
-    let a=0;function footerLoop(){ctx.clearRect(0,0,f.width,f.height);for(let i=0;i<50;i++){const x=i*30+a%30;const y=Math.sin((i+a/10)/2)*20+60;ctx.fillStyle=`rgba(${150+i*2},${100+i*3},255,0.15)`;ctx.beginPath();ctx.arc(x,y,20,0,Math.PI*2);ctx.fill();}a+=0.5;requestAnimationFrame(footerLoop);}footerLoop();
+    let a=0;function footerLoop(){ctx.clearRect(0,0,f.width,f.height);
+      for(let i=0;i<50;i++){const x=i*30+a%30;const y=Math.sin((i+a/10)/2)*20+60;
+        ctx.fillStyle=`rgba(${150+i*2},${100+i*3},255,0.15)`;ctx.beginPath();ctx.arc(x,y,20,0,Math.PI*2);ctx.fill();}
+      a+=0.5;requestAnimationFrame(footerLoop);}footerLoop();
   </script>
 </body>
 </html>
