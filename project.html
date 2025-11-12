@@ -6,106 +6,23 @@
   <title>Project "Robot"</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
   <style>
-    :root {
-      --bg: #0b0f15;
-      --card: #121826;
-      --text: #e5e7eb;
-      --muted: #9ca3af;
-      --accent: #8b5cf6;
-      --accent-2: #22d3ee;
-    }
-    * { box-sizing: border-box }
-    html, body { height: 100%; margin: 0; font-family: system-ui, -apple-system, 'Segoe UI', Roboto, Ubuntu, Cantarell; }
-    body {
-      background: radial-gradient(1200px 600px at 10% -10%, rgba(34,211,238,.08), transparent),
-                  radial-gradient(1000px 500px at 110% 10%, rgba(139,92,246,.08), transparent),
-                  var(--bg);
-      color: var(--text);
-      line-height: 1.6;
-      overflow-x: hidden;
-    }
-    header {
-      text-align: center;
-      padding: 20px 10px;
-      position: relative;
-    }
-    .back-btn {
-      position: absolute;
-      left: 20px; top: 20px;
-      background: none;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: var(--text);
-      border-radius: 8px;
-      padding: 6px 14px;
-      cursor: pointer;
-      transition: all .3s;
-    }
-    .back-btn:hover {
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      border-color: transparent;
-      transform: translateX(-3px);
-    }
-    h1 {
-      font-size: clamp(26px, 5vw, 40px);
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-bottom: 10px;
-      animation: fadeIn 1s ease;
-    }
-    .lead { color: var(--muted); font-size: 16px; }
-    .project-gallery {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 25px;
-      padding: 30px 10px;
-      max-width: 1100px;
-      margin: auto;
-    }
-    .project-card {
-      background: var(--card);
-      border: 1px solid rgba(255,255,255,.08);
-      border-radius: 14px;
-      width: 320px;
-      padding: 18px;
-      text-align: center;
-      box-shadow: 0 0 10px rgba(255,255,255,0.05);
-      transition: transform .4s ease, box-shadow .4s ease;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: fadeUp .8s ease forwards;
-    }
-    .project-card:hover {
-      transform: translateY(-8px) scale(1.03);
-      box-shadow: 0 0 25px 8px rgba(139,92,246,0.25),
-                  0 0 40px 16px rgba(34,211,238,0.15);
-      transition: box-shadow .4s ease-in-out, transform .4s ease-in-out;
-    }
-    .project-card img {
-      width: 100%;
-      border-radius: 12px;
-      object-fit: cover;
-      max-height: 220px;
-    }
-    h3 { margin: 12px 0 6px; }
-    p { color: var(--muted); font-size: 14px; }
-    footer {
-      text-align: center; padding: 20px; color: var(--muted);
-      border-top: 1px solid rgba(255,255,255,.1); margin-top: 40px;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(30px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(-20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    @media (max-width: 700px) {
-      .project-card { width: 90%; }
-      .back-btn { left: 10px; top: 10px; }
-    }
+    :root { --bg:#0b0f15; --card:#121826; --text:#e5e7eb; --muted:#9ca3af; --accent:#8b5cf6; --accent-2:#22d3ee; }
+    *{box-sizing:border-box} html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Ubuntu,Cantarell}
+    body{background:radial-gradient(1200px 600px at 10% -10%,rgba(34,211,238,.08),transparent),radial-gradient(1000px 500px at 110% 10%,rgba(139,92,246,.08),transparent),var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+    header{text-align:center;padding:20px 10px;position:relative}
+    .back-btn{position:absolute;left:20px;top:20px;background:none;border:1px solid rgba(255,255,255,.2);color:var(--text);border-radius:8px;padding:6px 14px;cursor:pointer;transition:all .3s}
+    .back-btn:hover{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-color:transparent;transform:translateX(-3px)}
+    h1{font-size:clamp(26px,5vw,40px);background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;animation:fadeIn 1s ease}
+    .lead{color:var(--muted);font-size:16px}
+    .project-gallery{display:flex;flex-wrap:wrap;justify-content:center;gap:25px;padding:30px 10px;max-width:1100px;margin:auto}
+    .project-card{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;width:320px;padding:18px;text-align:center;box-shadow:0 0 10px rgba(255,255,255,.05);transition:transform .4s ease,box-shadow .4s ease;opacity:0;transform:translateY(30px);animation:fadeUp .8s ease forwards}
+    .project-card:hover{transform:translateY(-8px) scale(1.03);box-shadow:0 0 25px 8px rgba(139,92,246,.25),0 0 40px 16px rgba(34,211,238,.15);transition:box-shadow .4s ease-in-out,transform .4s ease-in-out}
+    .project-card img{width:100%;border-radius:12px;object-fit:cover;max-height:220px}
+    h3{margin:12px 0 6px} p{color:var(--muted);font-size:14px}
+    footer{text-align:center;padding:20px;color:var(--muted);border-top:1px solid rgba(255,255,255,.1);margin-top:40px}
+    @keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+    @media(max-width:700px){.project-card{width:90%}.back-btn{left:10px;top:10px}}
   </style>
 </head>
 <body>
@@ -116,20 +33,20 @@
   </header>
 
   <section class="project-gallery">
-    <div class="project-card" style="animation-delay:0.1s">
+    <div class="project-card" style="animation-delay:.1s">
       <img src="https://picsum.photos/400/250?random=1" alt="Модуль зрения">
       <h3>Vision Module</h3>
-      <p>Отвечает за распознавание объектов и ориентацию в пространстве с использованием YOLOv8 и OpenPose.</p>
+      <p>Распознаёт объекты и ориентируется в пространстве (YOLOv8, OpenPose).</p>
     </div>
-    <div class="project-card" style="animation-delay:0.3s">
+    <div class="project-card" style="animation-delay:.3s">
       <img src="https://picsum.photos/400/250?random=2" alt="Система управления">
       <h3>Control System</h3>
-      <p>Синхронизирует движения и реакции робота на основе сенсоров и моделей предсказания траекторий.</p>
+      <p>Синхронизирует движения и реакции робота на основе сенсоров и предсказаний.</p>
     </div>
-    <div class="project-card" style="animation-delay:0.5s">
+    <div class="project-card" style="animation-delay:.5s">
       <img src="https://picsum.photos/400/250?random=3" alt="AI Обучение">
       <h3>AI Learning</h3>
-      <p>Самообучающаяся нейросеть, адаптирующая поведение под новые задачи и условия в реальном времени.</p>
+      <p>Адаптирует поведение под новые задачи и условия в реальном времени.</p>
     </div>
   </section>
 

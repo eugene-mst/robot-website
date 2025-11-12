@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Team — Robot</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+  <style>
+    :root { --bg:#0b0f15; --card:#121826; --text:#e5e7eb; --muted:#9ca3af; --accent:#8b5cf6; --accent-2:#22d3ee; }
+    *{box-sizing:border-box} html,body{height:100%;margin:0;font-family:system-ui,-apple-system,'Segoe UI',Roboto,Ubuntu,Cantarell}
+    body{background:radial-gradient(1200px 600px at 10% -10%,rgba(34,211,238,.08),transparent),radial-gradient(1000px 500px at 110% 10%,rgba(139,92,246,.08),transparent),var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+    header{text-align:center;padding:20px 10px;position:relative}
+    .back-btn{position:absolute;left:20px;top:20px;background:none;border:1px solid rgba(255,255,255,.2);color:var(--text);border-radius:8px;padding:6px 14px;cursor:pointer;transition:all .3s}
+    .back-btn:hover{background:linear-gradient(135deg,var(--accent),var(--accent-2));border-color:transparent;transform:translateX(-3px)}
+    h1{font-size:clamp(26px,5vw,40px);background:linear-gradient(135deg,var(--accent),var(--accent-2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:10px;animation:fadeIn 1s ease}
+    .team-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;max-width:1200px;margin:30px auto;padding:0 10px}
+    .member{background:var(--card);border:1px solid rgba(255,255,255,.08);border-radius:14px;text-align:center;padding:16px;box-shadow:0 0 10px rgba(255,255,255,.05);transition:transform .4s ease,box-shadow .4s ease}
+    .member:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 0 25px 8px rgba(139,92,246,.25),0 0 40px 16px rgba(34,211,238,.15)}
+    .member img{width:100%;border-radius:12px;object-fit:cover;max-height:200px}
+    h3{margin:10px 0 5px} p{color:var(--muted);font-size:14px}
+    footer{text-align:center;padding:20px;color:var(--muted);border-top:1px solid rgba(255,255,255,.1);margin-top:40px}
+    @media(max-width:1100px){.team-grid{grid-template-columns:repeat(3,1fr)}}
+    @media(max-width:800px){.team-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:520px){.team-grid{grid-template-columns:1fr}.back-btn{left:10px;top:10px}}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+  </style>
+</head>
+<body>
+  <header>
+    <button class="back-btn" onclick="window.location.href='index.html'">← Назад</button>
+    <h1>Наша команда</h1>
+  </header>
+
+  <section class="team-grid">
+    <div class="member">
+      <img src="https://picsum.photos/400/250?random=11" alt="Beka">
+      <h3>Beka</h3>
+      <p>AI and Vision Engineer</p>
+    </div>
+    <div class="member">
+      <img src="https://picsum.photos/400/250?random=12" alt="Madiyar">
+      <h3>Madiyar</h3>
+      <p>Mechanical Engineer</p>
+    </div>
+    <div class="member">
+      <img src="https://picsum.photos/400/250?random=13" alt="Tristan">
+      <h3>Tristan</h3>
+      <p>Robototechnic Engineer</p>
+    </div>
+    <div class="member">
+      <img src="https://picsum.photos/400/250?random=14" alt="Yevhenii">
+      <h3>Yevhenii</h3>
+      <p>Web Developer and Vision Engineer</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>© <span id="year"></span> Robot — Team</p>
+  </footer>
+
+  <script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+</body>
+</html>
